@@ -1,50 +1,30 @@
-// Funzione per mostrare il nome salvato, se presente
-function displaySavedName() {
-  const savedName = localStorage.getItem('name')
-  const savedNameDiv = document.getElementById('savedName')
-  if (savedName) {
-    savedNameDiv.textContent = `Nome salvato: ${savedName}`
-  } else {
-    savedNameDiv.textContent = ''
-  }
+// ESERCIZIO 1
+
+const saveButton = document.getElementById('save-button')
+const resetButton = document.getElementById('reset-button')
+const nameInput = document.getElementById('name-input')
+
+// chiave che mi salva nel localStorage
+const key = 'es1-name'
+
+const h2 = document.getElementById('saved-name')
+
+saveButton.addEventListener('click', function () {
+  // devo raccogliere il valore dell'input e lo salvo nel localstorage
+  localStorage.setItem(key, nameInput.value)
+
+  // inserisco il nome salvato nell'h2
+  h2.innerText = nameInput.value
+})
+
+// all'avvio della pagina metto l'ultimo nome salvato nell'h2
+if (localStorage.getItem(key)) {
+  h2.innerText = localStorage.getItem(key)
 }
 
-// Funzione per salvare il nome
-function saveName() {
-  const name = document.getElementById('nameInput').value
-  if (name) {
-    localStorage.setItem('name', name)
-    displaySavedName()
-    alert('Nome salvato con successo!')
-  } else {
-    alert('Inserisci un nome prima di salvare.')
-  }
-}
-
-// Funzione per rimuovere il nome salvato
-function removeName() {
-  localStorage.removeItem('name')
-  displaySavedName()
-  alert('Nome rimosso con successo!')
-}
-
-displaySavedName()
-
-// ESERCIZIO 2
-// Recupera il tempo trascorso dalla sessione (o inizia da zero)
-let secondsElapsed = sessionStorage.getItem('secondsElapsed')
-  ? parseInt(sessionStorage.getItem('secondsElapsed'))
-  : 0
-
-// Funzione per aggiornare il contatore ogni secondo
-function updateTimer() {
-  secondsElapsed++
-  document.getElementById('timer').textContent = secondsElapsed
-  sessionStorage.setItem('secondsElapsed', secondsElapsed)
-}
-
-// Avvia il contatore
-setInterval(updateTimer, 1000)
-
-// Imposta il valore iniziale
-document.getElementById('timer').textContent = secondsElapsed
+resetButton.addEventListener('click', function () {
+  // ripristina il valore di default dell'h2
+  h2.innerText = 'Nessun nome salvato'
+  //   elimino la key dal localStorage
+  localStorage.removeItem(key)
+})
